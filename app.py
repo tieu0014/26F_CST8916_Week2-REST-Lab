@@ -115,14 +115,9 @@ def get_task(task_id):
 
 @app.route('/tasks', methods=['POST'])
 def create_task():
-    # If the request body is not in JSON format or if the 'name' field is missing, return a 400 error (Bad Request)
+    # If the request body is not in JSON format or if the 'title' field is missing, return a 400 error (Bad Request)
     if not request.json or not 'title' in request.json or not 'user_id' in request.json:
         abort(400)
-    # If user_id does not reference existing user return 400 error (Bad Request)
-    if all(user.get('id') != request.json['user_id'] for user in users):
-        abort(400)
-    # Create a new task dictionary. Assign the next available ID by incrementing the highest current ID.
-    # If no tasks exist, the new ID will be 1.
     new_task = {
         'id': tasks[-1]['id'] + 1 if tasks else 1,
         'title': request.json['title'],  # The title is provided in the POST request body
@@ -144,9 +139,6 @@ def update_task(task_id):
     # If the request body is missing or not in JSON format, return a 400 error (Bad Request)
     if not request.json:
         abort(400)
-    # If user_id does not reference existing user return 400 error (Bad Request)
-    if all(user.get('id') != request.json['user_id'] for user in users):
-        abort(400)
     # Update the task's data based on the request body
     # If a field is not provided in the request, keep the existing value
     task['title'] = request.json.get('title', task['title'])
@@ -162,9 +154,10 @@ def delete_task(task_id):
     tasks = [task for task in tasks if task['id'] != task_id]
     return '', 204  # 204 is the HTTP status code for 'No Content', indicating the deletion was successful
 
+# Modified DELETE since it returns a new list of objects
 @app.route('/users/<int:user_id>/tasks', methods=['GET'])
 def get_user_tasks(user_id):
-    global tasks
+    global tasks # Reference the global tasks list
     tasks = [task for task in tasks if task['user_id'] == user_id]
     if tasks is None:
         abort(404)  # If the user is not found, return a 404 error (Not Found)
