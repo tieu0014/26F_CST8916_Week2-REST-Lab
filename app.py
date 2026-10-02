@@ -105,13 +105,13 @@ def delete_user(user_id):
 def get_tasks():
     return jsonify(tasks), 200  # 200 is the HTTP status code for 'OK'
 
-@app.route('/tasks/<int:tasks_id>', methods=['GET'])
-def get_tasks(tasks_id):
-    # Using a list comprehension to find the tasks by ID
-    tasks = next((tasks for tasks in taskss if tasks['id'] == tasks_id), None)
-    if tasks is None:
-        abort(404)  # If the tasks is not found, return a 404 error (Not Found)
-    return jsonify(tasks), 200  # Return the tasks as a JSON object with a 200 status code (OK)
+@app.route('/tasks/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    # Using a list comprehension to find the task by ID
+    task = next((task for task in tasks if task['id'] == task_id), None)
+    if task is None:
+        abort(404)  # If the task is not found, return a 404 error (Not Found)
+    return jsonify(task), 200  # Return the task as a JSON object with a 200 status code (OK)
 
 @app.route('/tasks', methods=['POST'])
 def create_task():
@@ -161,6 +161,14 @@ def delete_task(task_id):
     # Rebuild the tasks list, excluding the task with the specified ID
     tasks = [task for task in tasks if task['id'] != task_id]
     return '', 204  # 204 is the HTTP status code for 'No Content', indicating the deletion was successful
+
+@app.route('/users/<int:user_id>/tasks', methods=['GET'])
+def get_user_tasks(user_id):
+    global tasks
+    tasks = [task for task in tasks if task['user_id'] == user_id]
+    if tasks is None:
+        abort(404)  # If the user is not found, return a 404 error (Not Found)
+    return jsonify(tasks), 200  # Return the user as a JSON object with a 200 status code (OK)
 
 # Entry point for running the Flask app
 # The app will run on host 0.0.0.0 (accessible on all network interfaces) and port 8000.

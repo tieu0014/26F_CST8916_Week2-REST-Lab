@@ -73,8 +73,15 @@ Content-Type: application/json
 {
   "title": "Complete 21",
   "description": "REST",
+  "user_id": 1,
   "completed": false
 }
+
+###
+
+# GET a specific task by ID
+GET http://localhost:8000/users/1/tasks
+Accept: application/json
 
 ###
 
