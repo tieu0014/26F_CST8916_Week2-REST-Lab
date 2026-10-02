@@ -20,7 +20,10 @@ users = [
     {"id": 1, "name": "Alice", "age": 25},
     {"id": 2, "name": "Bob", "age": 30},
 ]
-
+tasks = [
+    {"id": 1, "title": "Learn REST", "description": "Study REST principles", "user_id": 1, "completed": True},
+    {"id": 2, "title": "Build API", "description": "Complete the assignment", "user_id": 2, "completed": False},
+]
 # Define route to handle requests to the root URL ('/')
 @app.route('/')
 def index():
@@ -96,6 +99,67 @@ def delete_user(user_id):
     global users  # Reference the global users list
     # Rebuild the users list, excluding the user with the specified ID
     users = [user for user in users if user['id'] != user_id]
+    return '', 204  # 204 is the HTTP status code for 'No Content', indicating the deletion was successful
+
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify(tasks), 200  # 200 is the HTTP status code for 'OK'
+
+@app.route('/tasks/<int:tasks_id>', methods=['GET'])
+def get_tasks(tasks_id):
+    # Using a list comprehension to find the tasks by ID
+    tasks = next((tasks for tasks in taskss if tasks['id'] == tasks_id), None)
+    if tasks is None:
+        abort(404)  # If the tasks is not found, return a 404 error (Not Found)
+    return jsonify(tasks), 200  # Return the tasks as a JSON object with a 200 status code (OK)
+
+@app.route('/tasks', methods=['POST'])
+def create_task():
+    # If the request body is not in JSON format or if the 'name' field is missing, return a 400 error (Bad Request)
+    if not request.json or not 'title' in request.json or not 'user_id' in request.json:
+        abort(400)
+    # If user_id does not reference existing user return 400 error (Bad Request)
+    if all(user.get('id') != request.json['user_id'] for user in users):
+        abort(400)
+    # Create a new task dictionary. Assign the next available ID by incrementing the highest current ID.
+    # If no tasks exist, the new ID will be 1.
+    new_task = {
+        'id': tasks[-1]['id'] + 1 if tasks else 1,
+        'title': request.json['title'],  # The title is provided in the POST request body
+        'description': request.json.get('description', ''),  # The description is optional; default is '' if not provided
+        'user_id': request.json['user_id'],  # Must reference existing user
+        'completed': request.json.get('completed', False),  # The completed status is optional; default is False if not provided
+    }
+    # Add the new task to the tasks list
+    tasks.append(new_task)
+    return jsonify(new_task), 201  # 201 is the HTTP status code for 'Created'
+
+@app.route('/tasks/<int:task_id>', methods=['PUT'])
+def update_task(task_id):
+    # Find the task by their ID
+    task = next((task for task in tasks if task['id'] == task_id), None)
+    if task is None:
+        abort(404)  # If the task is not found, return a 404 error (Not Found)
+    
+    # If the request body is missing or not in JSON format, return a 400 error (Bad Request)
+    if not request.json:
+        abort(400)
+    # If user_id does not reference existing user return 400 error (Bad Request)
+    if all(user.get('id') != request.json['user_id'] for user in users):
+        abort(400)
+    # Update the task's data based on the request body
+    # If a field is not provided in the request, keep the existing value
+    task['title'] = request.json.get('title', task['title'])
+    task['description'] = request.json.get('description', task['description'])
+    task['user_id'] = request.json.get('user_id', task['user_id'])
+    task['completed'] = request.json.get('completed', task['completed'])
+    return jsonify(task), 200  # Return the updated task data with a 200 status code (OK)
+
+@app.route('/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    global tasks  # Reference the global tasks list
+    # Rebuild the tasks list, excluding the task with the specified ID
+    tasks = [task for task in tasks if task['id'] != task_id]
     return '', 204  # 204 is the HTTP status code for 'No Content', indicating the deletion was successful
 
 # Entry point for running the Flask app

@@ -1,0 +1,82 @@
+# GET root URL
+GET http://localhost:8000/
+Accept: text/plain
+
+###
+
+# GET health check
+GET http://localhost:8000/health
+Accept: application/json
+
+###
+
+# GET all tasks
+GET http://localhost:8000/tasks
+Accept: application/json
+
+###
+
+# GET a specific task by ID
+GET http://localhost:8000/tasks/1
+Accept: application/json
+
+###
+
+# GET a specific task by ID
+GET http://localhost:8000/tasks/10
+Accept: application/json
+
+###
+
+# POST create a new task
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+  "title": "Complete Assignment 21",
+  "description": "REST API with tasks",
+  "user_id": 1,
+  "completed": false
+}
+
+###
+
+# POST create a new task
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+  "description": "REST API with tasks",
+  "user_id": 1,
+  "completed": false
+}
+
+###
+
+# POST create a new task
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+  "title": "Complete Assignment 21",
+  "description": "REST API with tasks",
+  "user_id": 20,
+  "completed": false
+}
+
+###
+
+# PUT update a task by ID
+PUT http://localhost:8000/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Complete 21",
+  "description": "REST",
+  "completed": false
+}
+
+###
+
+# DELETE a task by ID
+DELETE http://localhost:8000/tasks/1
