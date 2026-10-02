@@ -1,29 +1,29 @@
 # GET root URL
-GET http://localhost:8000/
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/
 Accept: text/plain
 
 ###
 
 # GET health check
-GET http://localhost:8000/health
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/health
 Accept: application/json
 
 ###
 
 # GET all users
-GET http://localhost:8000/users
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/users
 Accept: application/json
 
 ###
 
 # GET a specific user by ID
-GET http://localhost:8000/users/1
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/users/1
 Accept: application/json
 
 ###
 
 # POST create a new user
-POST http://localhost:8000/users
+POST rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/users
 Content-Type: application/json
 
 {
@@ -34,7 +34,7 @@ Content-Type: application/json
 ###
 
 # PUT update a user by ID
-PUT http://localhost:8000/users/1
+PUT rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/users/1
 Content-Type: application/json
 
 {
@@ -45,4 +45,4 @@ Content-Type: application/json
 ###
 
 # DELETE a user by ID
-DELETE http://localhost:8000/users/1
+DELETE rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/users/1

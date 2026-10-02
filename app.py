@@ -158,10 +158,10 @@ def delete_task(task_id):
 @app.route('/users/<int:user_id>/tasks', methods=['GET'])
 def get_user_tasks(user_id):
     global tasks # Reference the global tasks list
-    tasks = [task for task in tasks if task['user_id'] == user_id]
-    if tasks is None:
+    usertasks = [task for task in tasks if task['user_id'] == user_id]
+    if usertasks is None:
         abort(404)  # If the user is not found, return a 404 error (Not Found)
-    return jsonify(tasks), 200  # Return the user as a JSON object with a 200 status code (OK)
+    return jsonify(usertasks), 200  # Return the user's tasks as a JSON object with a 200 status code (OK)
 
 # Entry point for running the Flask app
 # The app will run on host 0.0.0.0 (accessible on all network interfaces) and port 8000.

@@ -1,35 +1,35 @@
 # GET root URL
-GET http://localhost:8000/
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/
 Accept: text/plain
 
 ###
 
 # GET health check
-GET http://localhost:8000/health
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/health
 Accept: application/json
 
 ###
 
 # GET all tasks
-GET http://localhost:8000/tasks
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks
 Accept: application/json
 
 ###
 
 # GET a specific task by ID
-GET http://localhost:8000/tasks/1
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks/1
 Accept: application/json
 
 ###
 
 # GET a task that does not exist
-GET http://localhost:8000/tasks/10
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks/10
 Accept: application/json
 
 ###
 
 # POST create a new task (valid data)
-POST http://localhost:8000/tasks
+POST rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks
 Content-Type: application/json
 
 {
@@ -42,7 +42,7 @@ Content-Type: application/json
 ###
 
 # POST create a new task (missing title)
-POST http://localhost:8000/tasks
+POST rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks
 Content-Type: application/json
 
 {
@@ -54,7 +54,7 @@ Content-Type: application/json
 ###
 
 # POST create a new task (with an invalid user_id)
-POST http://localhost:8000/tasks
+POST rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks
 Content-Type: application/json
 
 {
@@ -66,7 +66,7 @@ Content-Type: application/json
 ###
 
 # PUT update a task by ID
-PUT http://localhost:8000/tasks/1
+PUT rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks/1
 Content-Type: application/json
 
 {
@@ -79,10 +79,10 @@ Content-Type: application/json
 ###
 
 # GET all tasks associated with a specific user ID
-GET http://localhost:8000/users/1/tasks
+GET rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/users/1/tasks
 Accept: application/json
 
 ###
 
 # DELETE a task by ID
-DELETE http://localhost:8000/tasks/1
+DELETE rest-frcvexggc8hserca.mexicocentral-01.azurewebsites.net/tasks/2
